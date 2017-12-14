@@ -1,0 +1,5 @@
+XMPP <-> Telegram Gateway
+=========================
+
+This is Telegram to Jabber (XMPP) transport written in Python 3 using Telethon and SleekXMPP libraries. For
+installation info please read file INSTALL. This software licensed under Apache 2.0 licence (see LICENSE file).

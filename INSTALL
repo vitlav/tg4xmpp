@@ -1,0 +1,11 @@
+INSTALLATION
+============
+
+- Only unix systems officially supported by this software
+- Please be sure that you have Jabber server with XEP-100/XEP-114 support and Python 3 interpreter in your system
+- Install dependencies from 'requirement.txt' file (you can use pip/venv for this operation)
+- We recommends use Telethon library from this repository because pip/upstream versions may have some issues
+- Configure your Jabber server to use an external components
+- Rename 'config_example.py' to 'config.py' and setup all config variables
+- Transport runs by starting 'start.py' via configured python interpreter/virtual environment
+- All information outputs to STDOUT/STDERR streams and log file
