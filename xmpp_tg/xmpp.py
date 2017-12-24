@@ -8,7 +8,7 @@ from telethon.tl.functions.account import UpdateStatusRequest, GetAuthorizations
 from telethon.tl.types import InputPeerEmpty, InputPeerUser, InputPeerChat, InputPeerChannel
 from telethon.tl.types import PeerChannel, PeerChat, PeerUser, Chat, ChatForbidden, Channel, ChannelForbidden
 from telethon.tl.types import UserStatusOnline, UserStatusRecently, UserStatusOffline
-from telethon.tl.types import UpdatesTg, UpdateShortSentMessage, UpdateMessageID
+from telethon.tl.types import Updates, UpdateShortSentMessage, UpdateMessageID
 from telethon.tl.types.messages import Dialogs, DialogsSlice
 
 from telethon.helpers import generate_random_long
@@ -134,7 +134,7 @@ class XMPPTelegram(ComponentXMPP):
                         msg_id = None
 
                         # Ищем ID отправленного сообщения
-                        if type(result) is UpdatesTg:  # Супегруппа / канал
+                        if type(result) is Updates:  # Супегруппа / канал
                             for upd in result.updates:
                                 if type(upd) is UpdateMessageID:
                                     msg_id = upd.id

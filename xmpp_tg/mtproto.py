@@ -1,7 +1,7 @@
 from telethon import TelegramClient
 from telethon.utils import get_extension
 from telethon.tl.types import UpdateShortMessage, UpdateShortChatMessage, UpdateEditMessage, UpdateDeleteMessages, \
-                              UpdateNewMessage, UpdateUserStatus, UpdateShort, UpdatesTg, UpdateNewChannelMessage,\
+                              UpdateNewMessage, UpdateUserStatus, UpdateShort, Updates, UpdateNewChannelMessage,\
                               UpdateChannelTooLong, UpdateDeleteChannelMessages, UpdateEditChannelMessage,\
                               UpdateUserName
 from telethon.tl.types import InputPeerChat, InputPeerUser, InputPeerChannel, InputUser
@@ -72,8 +72,8 @@ class TelegramGateClient(TelegramClient):
         nl = '\n' if self.user_options['nl_after_info'] else ''
 
         try:
-            if type(obj) is UpdatesTg:  # Какой-то общий тип обновления (всегда большое со списками)
-                print('UpdatesTg')
+            if type(obj) is Updates:  # Какой-то общий тип обновления (всегда большое со списками)
+                print('Updates')
 
                 # Делаем разбор пользователей/чатов, которые учавствуют в апдейте
                 updates_users = {usr.id: usr for usr in obj.users}
