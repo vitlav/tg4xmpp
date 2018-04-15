@@ -34,7 +34,7 @@ import traceback
 
 class TelegramGateClient(TelegramClient):
     def __init__(self, session, api_id, api_hash, xmpp_gate, jid, phone, proxy=None):
-        super().__init__(session, api_id, api_hash, proxy)
+        super().__init__(session, api_id, api_hash, proxy=proxy)
 
         self.xmpp_gate = xmpp_gate
         self.jid = jid
