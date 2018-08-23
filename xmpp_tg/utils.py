@@ -1,29 +1,50 @@
-"""
-Различные полезные функции
-"""
-
 import types
+import time
+import pytz
 from datetime import datetime
 
 
-def display_tg_name(first_name, last_name):
-    if first_name and last_name:
-        return '{} {}'.format(first_name, last_name)
-    elif first_name:
-        return first_name
-    elif last_name:
-        return last_name
+
+def display_tg_name(peer):
+    if hasattr(peer,'title') and hasattr(peer,'broadcast') and peer.broadcast: # channel
+        return '[C] ' + peer.title
+    elif hasattr(peer,'title') and hasattr(peer,'broadcast') and not peer.broadcast: # supergroup
+        return '[SG] ' + peer.title
+    elif hasattr(peer,'title'): # normal group
+        return '[G] ' + peer.title
+    elif peer.first_name and peer.last_name: # user with first and last name
+        return '{} {}'.format(peer.first_name, peer.last_name)
+    elif peer.first_name: # user with firstname only
+        return peer.first_name
+    elif peer.last_name: # user with lastname only 
+        return peer.last_name
+    elif peer.username: # user with username only
+        return peer.username
+    else: # no match, unknown contact
+        return '[Unknown]'
+
+def get_contact_jid(peer, gatejid):
+    if peer.id and hasattr(peer,'title') and hasattr(peer, 'broadcast') and peer.broadcast: # channel
+        return 'c' + str(peer.id) + '@' + gatejid
+    elif peer.id and hasattr(peer,'title') and hasattr(peer,'broadcast') and not peer.broadcast: # supergroup
+        return 's' + str(peer.id) + '@' + gatejid
+    elif peer.id and hasattr(peer,'title'): # normal group
+        return 'g' + str(peer.id) + '@' + gatejid
+    elif peer.id and not peer.bot: # it is... user?
+        return 'u' + str(peer.id) + '@' + gatejid
+    elif peer.id and peer.bot:
+        return 'b' + str(peer.id) + '@' + gatejid
+    else: # what a fuck is this? 
+        return None
+
+def localtime(utc_dt):
+    if time.daylight:
+        offsetHour = time.altzone / 3600
     else:
-        return '[No name]'
-
-
-def make_gate_jid():
-    pass
-
-
-def parse_gate_jid():
-    pass
-
+        offsetHour = time.timezone / 3600
+    local_tz = pytz.timezone('Etc/GMT%+d' % offsetHour)
+    local_dt = utc_dt.replace(tzinfo = pytz.utc).astimezone(local_tz)
+    return local_tz.normalize(local_dt)
 
 def var_dump(obj, depth=7, l=""):
     # fall back to repr
