@@ -577,8 +577,8 @@ class XMPPTelegram(ComponentXMPP):
         self.tg_connections[jid].add_update_handler(self.tg_connections[jid].xmpp_update_handler)
         
     def roster_exchange(self, tojid, contacts):
-        
         message = Message()
+        message.xml.tag = 'message'
         message['from'] = self.boundjid.bare
         message['to'] = tojid
         rawxml = "<x xmlns='http://jabber.org/protocol/rosterx'>"
