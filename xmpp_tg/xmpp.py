@@ -108,7 +108,7 @@ class XMPPTelegram(ComponentXMPP):
                 self.process_command(iq)
             else:
                 self.gate_reply_message(iq, 'Only commands accepted. Try !help for more info.')
-        else:  # --- outgoing message ---
+        elif iq['type'] == 'chat':  # --- outgoing message ---
             if jid in self.tg_connections and self.tg_connections[jid].is_user_authorized():
                 if iq['body'].startswith('!'):  # it is command!
                     if iq['to'].bare.startswith( ('u', 'b') ):
