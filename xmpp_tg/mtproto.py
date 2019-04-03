@@ -78,7 +78,7 @@ class TelegramGateClient(TelegramClient):
             if type(obj) in [UpdateShortMessage] and not obj.out:
 
                fwd_from = self._process_forward_msg(obj) if obj.fwd_from else '' # process forward messages 
-               self.gate_send_message( mfrom='u' + str(obj.user_id), mbody = '[MSG {}] {}{}'.format(obj.id, fwd_from, obj.message) )  
+               self.gate_send_message( mfrom='u' + str(obj.user_id), mbody = '{}{}'.format(fwd_from, obj.message) )
                usr = self._get_user_information(obj.user_id) # get peer information
                self.invoke(ReadHistoryRequest( InputPeerUser(usr.id, usr.access_hash), obj.id )) # delivery report
                
@@ -89,7 +89,7 @@ class TelegramGateClient(TelegramClient):
                nickname = display_tg_name(usr)
                
                # send message 
-               self.gate_send_message(mfrom='g' + str(obj.chat_id), mbody ='[MSG {}] [User: {}] {}{}'.format(obj.id, nickname, fwd_from, obj.message) )
+               self.gate_send_message(mfrom='g' + str(obj.chat_id), mbody ='[User: {}] {}{}'.format(nickname, fwd_from, obj.message) )
                self.invoke(ReadHistoryRequest(InputPeerChat(obj.chat_id), obj.id))
                
              
